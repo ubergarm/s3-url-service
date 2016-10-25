@@ -29,8 +29,12 @@ docker run --rm \
             -e AWS_DEFAULT_REGION \
             -e AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY \
-            ubergarm/s3-url-service \
-            node index.js
+            ubergarm/s3-url-service
+```
+Once inside the container run:
+```bash
+npm install # first time only
+node index.js
 ```
 
 ## Test
@@ -87,6 +91,7 @@ sure your user/role has access to S3 from its attached IAM policy as well.)
 - [x] Test upload
 - [x] Give example S3 Bucket Policy
 - [ ] Pass in caching parameters as environment variables
+- [ ] Cleanup how container starts
 - [ ] Look more closely at `http` vs `https` support
 - [ ] Find way to cleanup duplicated code
 - [ ] Support multiple credentials/buckets secured with JWT claims (you can open a PR for this one! ;) )
