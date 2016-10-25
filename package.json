@@ -1,0 +1,32 @@
+{
+  "name": "s3-url-service",
+  "version": "1.0.0",
+  "description": "Redirects bearer token requests with presigned S3 urls.",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.6.12",
+    "restify": "^4.1.1",
+    "restify-jwt": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ubergarm/s3-url-service.git"
+  },
+  "keywords": [
+    "jwt",
+    "aws",
+    "s3",
+    "presigned",
+    "service"
+  ],
+  "author": "John Leimgruber III",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ubergarm/s3-url-service/issues"
+  },
+  "homepage": "https://github.com/ubergarm/s3-url-service#readme"
+}
