@@ -18,24 +18,29 @@ both worlds:
 docker build -t ubergarm/s3-url-service .
 ```
 
+## Runtime Configuration
+Environment Variable | Description | Default
+--- | --- | ---
+`JWT_SECRET` | *The plain text HMAC-SHA256 symmetric secret key* | `secret`
+`EXPIRES` | *Link expiration and redirect cache duration (in seconds)* | `2592000` (30 days in seconds)
+`AWS_DEFAULT_REGION` | *AWS region* | `us-east-1`
+`AWS_ACCESS_KEY_ID` | *AWS ID credentials* | n/a
+`AWS_SECRET_ACCESS_KEY` | *AWS SECRET credentials* | n/a
+
 ## Run
 Export your AWS credentials as environment variables then:
 ```bash
 docker run --rm \
             -it \
-            -v `pwd`:/app \
             -p 8080:8080 \
             -e JWT_SECRET=secret \
+            -e EXPIRES=86400 \
             -e AWS_DEFAULT_REGION \
             -e AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY \
             ubergarm/s3-url-service
 ```
-Once inside the container run:
-```bash
-npm install # first time only
-node index.js
-```
+*Optionally* you can add `-v $PWD:/app` to test without rebuilding etc...
 
 ## Test
 Download content:
@@ -90,8 +95,8 @@ sure your user/role has access to S3 from its attached IAM policy as well.)
 - [x] Test download
 - [x] Test upload
 - [x] Give example S3 Bucket Policy
-- [ ] Pass in caching parameters as environment variables
-- [ ] Cleanup how container starts
+- [x] Pass in caching parameters as environment variables
+- [x] Cleanup how container starts
 - [ ] Look more closely at `http` vs `https` support
 - [ ] Find way to cleanup duplicated code
 - [ ] Support multiple credentials/buckets secured with JWT claims (you can open a PR for this one! ;) )

@@ -16,6 +16,9 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
+// pull in a global config variable for link and cache expiration (in seconds)
+var EXPIRES = parseInt(process.env.EXPIRES) || 2592000 // 30 days (in seconds)
+
 // S3 getObject redirect endpoint GET /:bucket/:key
 server.get(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, function(req, res, next) {
   // handle Bearer token claims here
@@ -35,12 +38,12 @@ server.get(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, function(req, res, next) {
   var params = {
     Bucket: bucket,
     Key: key,
-    Expires: 2592000 // 30 days (in seconds)
+    Expires: EXPIRES
   };
   s3.getSignedUrl('getObject', params, function (err, url) {
     if (err)
       return next(err);
-    res.cache({maxAge: 2592000});
+    res.cache({maxAge: EXPIRES});
     res.redirect(307, url, next);
   });
 });
@@ -64,12 +67,12 @@ server.put(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, function(req, res, next) {
   var params = {
     Bucket: bucket,
     Key: key,
-    Expires: 2592000 // 30 days (in seconds)
+    Expires: EXPIRES
   };
   s3.getSignedUrl('putObject', params, function (err, url) {
     if (err)
       return next(err);
-    res.cache({maxAge: 2592000});
+    res.cache({maxAge: EXPIRES});
     res.redirect(307, url, next);
   });
 });

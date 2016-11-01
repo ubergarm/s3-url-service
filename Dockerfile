@@ -3,6 +3,9 @@ FROM mhart/alpine-node
 RUN apk add --no-cache \
             git
 
+COPY . /app
 WORKDIR /app
 
-CMD /bin/sh
+RUN npm install
+
+CMD node index.js
