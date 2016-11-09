@@ -30,8 +30,8 @@ server.get(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, function(req, res, next) {
   if(!req.params[0] || !req.params[1]) {
     return next(new Error('ERROR: Requires both valid bucket and key parameters'))
   }
-  var bucket = req.params[0];
-  var key = req.params[1];
+  var bucket = decodeURIComponent(req.params[0]);
+  var key = decodeURIComponent(req.params[1]);
 
   // generate presigned link
   var s3 = new AWS.S3();
@@ -59,8 +59,8 @@ server.put(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, function(req, res, next) {
   if(!req.params[0] || !req.params[1]) {
     return next(new Error('ERROR: Requires both valid bucket and key parameters'))
   }
-  var bucket = req.params[0];
-  var key = req.params[1];
+  var bucket = decodeURIComponent(req.params[0]);
+  var key = decodeURIComponent(req.params[1]);
 
   // generate presigned link
   var s3 = new AWS.S3();
