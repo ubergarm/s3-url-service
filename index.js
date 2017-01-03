@@ -6,8 +6,11 @@ var jwt = require('restify-jwt');
 var server = restify.createServer({name: 's3-url-service'});
 // configure JWT middleware
 server.use( jwt({
-  secret: process.env.JWT_SECRET || 'secret', // default secret is secret
-  credentialsRequired: false                  // set to true to require valid JWT
+  // default secret is 'secret' --> YOU SHOULD SET A BETTER SECRET!
+  secret: process.env.JWT_SECRET || 'secret',
+  // default to provide a valid response even if no JWT credentails in request
+  credentialsRequired: (process.env.JWT_CREDENTIALS_REQUIRED &&
+                        process.env.JWT_CREDENTIALS_REQUIRED.toLowerCase() == 'true') || false,
 }));
 // configure AWS credentials
 AWS.config.update({

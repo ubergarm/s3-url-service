@@ -22,6 +22,7 @@ docker build -t ubergarm/s3-url-service .
 Environment Variable | Description | Default
 --- | --- | ---
 `JWT_SECRET` | *The plain text HMAC-SHA256 symmetric secret key* | `secret`
+`JWT_CREDENTIALS_REQUIRED` | *'true' or 'false' to enforce valid JWT credentials in request* | `false`
 `EXPIRES` | *Link expiration and redirect cache duration (in seconds)* | `2592000` (30 days in seconds)
 `AWS_DEFAULT_REGION` | *AWS region* | `us-east-1`
 `AWS_ACCESS_KEY_ID` | *AWS ID credentials* | n/a
@@ -34,6 +35,7 @@ docker run --rm \
             -it \
             -p 8080:8080 \
             -e JWT_SECRET=secret \
+            -e JWT_CREDENTIALS_REQUIRED=false \
             -e EXPIRES=86400 \
             -e AWS_DEFAULT_REGION \
             -e AWS_ACCESS_KEY_ID \
@@ -87,6 +89,9 @@ sure your user/role has access to S3 from its attached IAM policy as well.)
 	]
 }
 ```
+*NOTE* this policy will allow uploading, but if the IAM is from a 3rd
+party account the permissions will be set at the object level, have a
+different owner, and in general not work like you might expect.
 
 ## TODO
 - [x] Implement `/:bucket/:key` endpoint regular expression
