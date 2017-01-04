@@ -45,13 +45,23 @@ docker run --rm \
 *Optionally* you can add `-v $PWD:/app` to test without rebuilding etc...
 
 ## Test
-Download content:
+Download content with credentials as Authorization header `Bearer token`:
 ```bash
 #apt-get install -y httpie || brew install httpie
 http --follow --print HBhb localhost:8080/s3_bucket_name/s3_key_value Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 ```
 
-Upload content:
+Download content with credentials as URL argument `token`:
+```bash
+http --follow --print HBhb localhost:8080/s3_bucket_name/s3_key_value?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+```
+
+Download content with credentials as Cookie `token`:
+```bash
+http --follow --print HBhb localhost:8080/s3_bucket_name/s3_key_value "Cookie:token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+```
+
+Upload content without any credentials:
 ```bash
 #apt-get install -y curl || brew install curl
 curl -v -L -T test.txt localhost:8080/s3_bucket_name/s3_key_value

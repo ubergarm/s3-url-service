@@ -1,16 +1,30 @@
 var AWS = require('aws-sdk')
 var restify = require('restify');
+var cookieParser = require('restify-cookies');
 var jwt = require('restify-jwt');
 
 // configure restify server instance
 var server = restify.createServer({name: 's3-url-service'});
 // configure JWT middleware
+server.use(restify.queryParser());
+server.use(cookieParser.parse);
+
 server.use( jwt({
   // default secret is 'secret' --> YOU SHOULD SET A BETTER SECRET!
   secret: process.env.JWT_SECRET || 'secret',
   // default to provide a valid response even if no JWT credentails in request
   credentialsRequired: (process.env.JWT_CREDENTIALS_REQUIRED &&
                         process.env.JWT_CREDENTIALS_REQUIRED.toLowerCase() == 'true') || false,
+  getToken: function fromHeaderOrQuerystringOrCookie (req) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+      return req.headers.authorization.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      return req.query.token;
+    } else if (req.cookies && req.cookies['token']) {
+      return req.cookies['token'];
+    }
+    return null;
+  }
 }));
 // configure AWS credentials
 AWS.config.update({
