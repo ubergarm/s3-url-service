@@ -70,7 +70,7 @@ function requestHandler (method) {
 server.get(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, requestHandler('getObject'));
 
 // S3 putObject redirect endpoint PUT /:bucket/:key
-server.put(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, requestHanlder('putObject'));
+server.put(/^\/([a-zA-Z0-9_\.-]+)\/(.*)/, requestHandler('putObject'));
 
 // fire up the server
 server.listen(8080, function() {
