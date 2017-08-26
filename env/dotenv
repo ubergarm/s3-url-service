@@ -7,5 +7,8 @@ AWS_SECRET_ACCESS_KEY=
 # The following lines are OPTIONAL
 # JWT_CREDENTIALS_REQUIRED=false
 # JWT_SECRET=secret
-# EXPIRES=2592000
+# EXPIRES=60480
 # AWS_DEFAULT_REGION=us-east-1
+
+# If AWS_SSE_KMS_KEY_ID is set, then SSE-KMS is enabled
+# AWS_SSE_KMS_KEY_ID=

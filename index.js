@@ -35,7 +35,9 @@ AWS.config.update({
 })
 
 // pull in a global config variable for link and cache expiration (in seconds)
-var EXPIRES = parseInt(process.env.EXPIRES) || 2592000 // 30 days (in seconds)
+// Presigning does not support expiry time greater than a week with SigV4 signing.
+// Set signatureVersion below to 'v3' to use expiry times longer than 1 week
+var EXPIRES = parseInt(process.env.EXPIRES) || (60 * 60 * 24 * 7) // 60480 seconds == 7 days == 1 week
 
 function requestHandler (method) {
   return function (req, res, next) {
@@ -52,12 +54,23 @@ function requestHandler (method) {
     var key = decodeURIComponent(req.params[1])
 
     // generate presigned link
-    var s3 = new AWS.S3()
+    var s3 = new AWS.S3({
+      // SSE-KMS requires v4, but also restrict EXPIRES to one week
+      signatureVersion: 'v4'
+    })
+
     var params = {
       Bucket: bucket,
       Key: key,
       Expires: EXPIRES
     }
+
+    if(method == "putObject" &&
+       process.env.AWS_SSE_KMS_KEY_ID) {
+      params.ServerSideEncryption = 'aws:kms';
+      params.SSEKMSKeyId = process.env.AWS_SSE_KMS_KEY_ID;
+    }
+
     s3.getSignedUrl(method, params, function (err, url) {
       if (err) {
         return next(err)

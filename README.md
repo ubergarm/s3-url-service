@@ -27,6 +27,7 @@ Environment Variable | Description | Default
 `AWS_DEFAULT_REGION` | *AWS region* | `us-east-1`
 `AWS_ACCESS_KEY_ID` | *AWS ID credentials* | n/a
 `AWS_SECRET_ACCESS_KEY` | *AWS SECRET credentials* | n/a
+`AWS_SSE_KMS_KEY_ID` | *AWS-KMS Key Id* (if unset, [SSE-KMS](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingKMSEncryption.html) is not enabled) | n/a
 
 ## Run
 Export your AWS credentials as environment variables then:
@@ -40,6 +41,7 @@ docker run --rm \
             -e AWS_DEFAULT_REGION \
             -e AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY \
+            -e AWS_SSE_KMS_KEY_ID \
             ubergarm/s3-url-service
 ```
 Alternatively, you can stash your environment variables on disk by copying the `env/dotenv` template to `env/.env` and editing that file.
@@ -133,3 +135,4 @@ different owner, and in general not work like you might expect.
 * [aws-sdk](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-intro.html)
 * [AWS Authentication](http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html)
 * [AWS CLI presign](http://docs.aws.amazon.com/cli/latest/reference/s3/presign.html)
+* [AWS SSE-KMS](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingKMSEncryption.html)
