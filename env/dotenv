@@ -1,0 +1,11 @@
+# Copy this file to .env
+
+# The following lines are REQUIRED
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+
+# The following lines are OPTIONAL
+# JWT_CREDENTIALS_REQUIRED=false
+# JWT_SECRET=secret
+# EXPIRES=2592000
+# AWS_DEFAULT_REGION=us-east-1

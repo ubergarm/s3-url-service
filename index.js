@@ -1,3 +1,4 @@
+require('dotenv').config({ path: 'env/.env' })
 var AWS = require('aws-sdk')
 var restify = require('restify')
 var cookieParser = require('restify-cookies')

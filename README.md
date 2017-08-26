@@ -42,6 +42,16 @@ docker run --rm \
             -e AWS_SECRET_ACCESS_KEY \
             ubergarm/s3-url-service
 ```
+Alternatively, you can stash your environment variables on disk by copying the `env/dotenv` template to `env/.env` and editing that file.
+Then run by mounting the `env` dir in your docker container:
+```bash
+docker run --rm \
+            -it \
+            -p 8080:8080 \
+            -v ${PWD}/env:/app/env \
+            ubergarm/s3-url-service
+```
+
 *Optionally* you can add `-v $PWD:/app` to test without rebuilding etc...
 
 ## Test
