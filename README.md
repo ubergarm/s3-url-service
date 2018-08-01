@@ -1,5 +1,7 @@
 s3-url-service
 ===
+[![](https://images.microbadger.com/badges/image/ubergarm/s3-url-service.svg)](https://microbadger.com/images/ubergarm/s3-url-service) [![](https://images.microbadger.com/badges/version/ubergarm/s3-url-service.svg)](https://microbadger.com/images/ubergarm/s3-url-service) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ubergarm/s3-url-service/blob/master/LICENSE)
+
 Redirect bearer token requests with presigned S3 urls.
 
 ## Overview
